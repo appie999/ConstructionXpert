@@ -1,6 +1,6 @@
-package com.sportflow.constructionxpert.model;
+package com.constraction.constructionxpert.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Tache {
     private int tacheid , projetid;
@@ -15,6 +15,10 @@ public class Tache {
         this.status = status;
         this.dateDeDebut = dateDeDebut;
         this.dateDeFin = dateDeFin;
+    }
+
+    public Tache() {
+
     }
 
     public int getTacheid() {

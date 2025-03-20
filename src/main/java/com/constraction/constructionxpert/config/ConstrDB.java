@@ -1,6 +1,4 @@
-package com.sportflow.constructionxpert.config;
-
-import com.mysql.cj.jdbc.Driver;
+package com.constraction.constructionxpert.config;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConstrDB {
 
-   private static final String URL = "jdbc:mysql://localhost:3306/construction_service_db";
+   private static final String URL = "jdbc:mysql://localhost:3306/construction";
    private static final String USER = "root";
    private static final String PASSWORD = "";
 

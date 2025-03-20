@@ -1,4 +1,4 @@
-package com.sportflow.constructionxpert.model;
+package com.constraction.constructionxpert.model;
 
 public class Ressource {
     private int ressourceid , quantite;
@@ -11,6 +11,10 @@ public class Ressource {
         this.type = type;
         this.informationsDuFournissour = informationsDuFournissour;
         this.unit = unit;
+    }
+
+    public Ressource() {
+
     }
 
     public int getRessourceid() {
@@ -46,7 +50,7 @@ public class Ressource {
     }
 
     public String getInformationsDuFournissour() {
-        return informationsDuFournissour;
+        return this.informationsDuFournissour;
     }
 
     public void setInformationsDuFournissour(String informationsDuFournissour) {

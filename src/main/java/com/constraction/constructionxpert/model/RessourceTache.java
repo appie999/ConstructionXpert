@@ -1,4 +1,4 @@
-package com.sportflow.constructionxpert.model;
+package com.constraction.constructionxpert.model;
 
 public class RessourceTache {
     private int tacheRessourceId;

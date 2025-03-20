@@ -1,6 +1,6 @@
-package com.sportflow.constructionxpert.model;
+package com.constraction.constructionxpert.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Projet {
     private int projetid;
@@ -23,6 +23,10 @@ public class Projet {
         this.budget = budget;
         this.dateDeDebut = dateDeDebut;
         this.dateDeFin = dateDeFin;
+    }
+
+    public Projet() {
+
     }
 
     public int getProjetid() {
@@ -57,7 +61,7 @@ public class Projet {
         this.budget = budget;
     }
 
-    public Date getDateDeDebut() {
+    public java.sql.Date getDateDeDebut() {
         return dateDeDebut;
     }
 
@@ -65,7 +69,7 @@ public class Projet {
         this.dateDeDebut = dateDeDebut;
     }
 
-    public Date getDateDeFin() {
+    public java.sql.Date getDateDeFin() {
         return dateDeFin;
     }
 

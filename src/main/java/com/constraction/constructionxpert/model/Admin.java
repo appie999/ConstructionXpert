@@ -1,4 +1,4 @@
-package com.sportflow.constructionxpert.model;
+package com.constraction.constructionxpert.model;
 
 public class Admin {
     private String nomComplet , username , password , email ;
