@@ -151,7 +151,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="projet?action=afficherAll">
+                    <a class="nav-link active" href="?action=afficherAll">
                         <i class="fas fa-project-diagram me-1"></i> Projets
                     </a>
                 </li>
@@ -182,7 +182,7 @@
             <h1 class="page-title">Gestion des Projets</h1>
         </div>
         <div class="col-md-4 text-end">
-            <a href="projet?action=afficherFormAjouter" class="btn btn-primary">
+            <a href="?action=afficherFormAjouter" class="btn btn-primary">
                 <i class="fas fa-plus-circle me-1"></i> Nouveau Projet
             </a>
         </div>
@@ -227,7 +227,7 @@
                             <td><fmt:formatDate value="${projet.dateDeFin}" pattern="dd/MM/yyyy" /></td>
                             <td><fmt:formatNumber value="${projet.budget}" type="currency" currencySymbol="€" /></td>
                             <td>
-                                <a href="projet?action=afficherbyId&projetId=${projet.id}" class="btn btn-sm btn-info action-btn">
+                                <a href="?action=afficherbyId&projetId=${projet.id}" class="btn btn-sm btn-info action-btn">
                                     <i class="fas fa-edit"></i>
                                 </a>
                                 <button type="button" class="btn btn-sm btn-danger action-btn"
@@ -249,7 +249,7 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                <a href="projet?action=supprimer&projetid=${projet.id}" class="btn btn-danger">Supprimer</a>
+                                                <a href="?action=supprimer&projetid=${projet.id}" class="btn btn-danger">Supprimer</a>
                                             </div>
                                         </div>
                                     </div>

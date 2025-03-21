@@ -17,6 +17,14 @@ public class Ressource {
 
     }
 
+    public Ressource(int quantite, String nom, String type, String informationsDuFournissour, String unite) {
+        this.quantite = quantite;
+        this.nom = nom;
+        this.type = type;
+        this.informationsDuFournissour = informationsDuFournissour;
+        this.unit = unite;
+    }
+
     public int getRessourceid() {
         return ressourceid;
     }

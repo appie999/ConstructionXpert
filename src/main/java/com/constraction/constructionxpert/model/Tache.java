@@ -7,8 +7,7 @@ public class Tache {
     private String description , ressource , status ;
     private Date dateDeDebut , dateDeFin ;
 
-    public Tache(int tacheid, int projetid, String description, String ressource, String status, Date dateDeDebut, Date dateDeFin) {
-        this.tacheid = tacheid;
+    public Tache( int projetid, String description, String ressource, String status, Date dateDeDebut, Date dateDeFin) {
         this.projetid = projetid;
         this.description = description;
         this.ressource = ressource;

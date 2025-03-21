@@ -1,4 +1,8 @@
 package com.constraction.constructionxpert.controller;
 
-public class AdminServlat {
+import jakarta.servlet.http.HttpServlet;
+
+public class AdminServlat extends HttpServlet {
+
+
 }

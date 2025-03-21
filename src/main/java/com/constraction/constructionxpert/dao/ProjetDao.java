@@ -11,21 +11,18 @@ public class ProjetDao {
 
     public void CreateProjet(Projet projet) throws SQLException {
         String sql = "insert into projets(nom , description , date_de_debut , date_de_fin , budget) values(?,?,?,?,?)";
-       try (Connection conn = ConstrDB.getConnection();
-       PreparedStatement ps = conn.prepareStatement(sql);
-       ResultSet rs = ps.executeQuery()) {
-           while (rs.next()) {
+        try (Connection conn = ConstrDB.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-               ps.setString(1, projet.getNom());
-               ps.setString(2, projet.getDescription());
-               ps.setDate(3,projet.getDateDeDebut());
-               ps.setDate(4,projet.getDateDeFin());
-               ps.setDouble(5, projet.getBudget());
-               ps.executeUpdate();
-           }
-
-       };
+            ps.setString(1, projet.getNom());
+            ps.setString(2, projet.getDescription());
+            ps.setDate(3, projet.getDateDeDebut());
+            ps.setDate(4, projet.getDateDeFin());
+            ps.setDouble(5, projet.getBudget());
+            ps.executeUpdate();
+        }
     }
+
 
     public Projet GetProjet(int id) throws SQLException {
         String sql = "select * from projets where id = ?";
@@ -45,24 +42,28 @@ public class ProjetDao {
         }
         return null;
     }
-    public List<Projet> GetAllProjet() throws SQLException {
-        List<Projet> projets = new ArrayList<Projet>();
-        String sql = "select * from projets";
-        Connection connection = ConstrDB.getConnection();
-        Statement ps = connection.createStatement();
-        ResultSet rs = ps.executeQuery(sql);
-        while(rs.next()) {
-            Projet projet = new Projet();
-            projet.setProjetid(rs.getInt(1));
-            projet.setNom(rs.getString(2));
-            projet.setDescription(rs.getString(3));
-            projet.setDateDeDebut(rs.getDate(4));
-            projet.setDateDeFin(rs.getDate(5));
-            projet.setBudget(rs.getDouble(6));
-            projets.add(projet);
+    public List<Projet> GetAllProjets() throws SQLException {
+        List<Projet> projets = new ArrayList<>();
+        String sql = "SELECT * FROM projets";
+        try (Connection connection = ConstrDB.getConnection();
+             Statement ps = connection.createStatement();
+             ResultSet rs = ps.executeQuery(sql)) {
+
+            while (rs.next()) {
+                Projet projet = new Projet();
+                projet.setNom(rs.getString("nom"));
+                projet.setDescription(rs.getString("description"));
+                projet.setDateDeDebut(rs.getDate("date_de_debut"));
+                projet.setDateDeFin(rs.getDate("date_de_fin"));
+                projet.setBudget(rs.getDouble("budget"));
+                projets.add(projet);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("Error fetching all projects", e);
         }
         return projets;
-}
+    }
+
 
     public void UpdateProjet(Projet projet) throws SQLException {
         String sql = "update projet set nom =? , Descreption =? , DateDeDebut =? , DateDeFin =? , Budget =? where id = ?";

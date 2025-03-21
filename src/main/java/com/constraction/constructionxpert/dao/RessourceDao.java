@@ -35,11 +35,11 @@ public class RessourceDao {
         ps.executeUpdate();
     }
 
-    public void DeleteRessource(Ressource r) throws SQLException {
+    public void DeleteRessource(int id) throws SQLException {
         String sql = "delete from ressources where id=?";
         Connection connection = ConstrDB.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1,r.getRessourceid());
+        ps.setInt(1,id);
         ps.executeUpdate();
     }
     public Ressource GetRessourceById(int id) throws SQLException {

@@ -118,7 +118,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="projet?action=afficherAll">
+                    <a class="nav-link active" href="?action=afficherAll">
                         <i class="fas fa-project-diagram me-1"></i> Projets
                     </a>
                 </li>
@@ -151,7 +151,7 @@
             <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i> Formulaire d'ajout de projet</h5>
         </div>
         <div class="card-body">
-            <form id="projetForm" action="projet" method="post">
+            <form id="projetForm" action="?action=ajouterProjet" method="post">
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="nom" class="form-label">Nom du projet</label>
@@ -183,7 +183,7 @@
                     <div class="form-text">Décrivez les objectifs et les détails du projet.</div>
                 </div>
                 <div class="d-flex justify-content-between">
-                    <a href="projet?action=afficherAll" class="btn btn-secondary">
+                    <a href="?action=afficherAll" class="btn btn-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Retour à la liste
                     </a>
                     <button type="submit" class="btn btn-primary">
@@ -205,37 +205,5 @@
 <!-- Bootstrap JS Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
-<!-- Custom JavaScript -->
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const dateDeDebut = document.getElementById('dateDeDebut');
-        const dateDeFin = document.getElementById('dateDeFin');
-
-        // Set min date for date inputs to today
-        const today = new Date().toISOString().split('T')[0];
-        dateDeDebut.setAttribute('min', today);
-
-        // Update end date min value based on start date
-        dateDeDebut.addEventListener('change', function() {
-            dateDeFin.setAttribute('min', this.value);
-
-            // If end date is before start date, reset it
-            if (dateDeFin.value && dateDeFin.value < dateDeDebut.value) {
-                dateDeFin.value = dateDeDebut.value;
-            }
-        });
-
-        // Form validation
-        const projetForm = document.getElementById('projetForm');
-        if (projetForm) {
-            projetForm.addEventListener('submit', function(event) {
-                if (dateDeDebut.value >= dateDeFin.value) {
-                    alert('La date de fin doit être postérieure à la date de début.');
-                    event.preventDefault();
-                }
-            });
-        }
-    });
-</script>
 </body>
 </html>
