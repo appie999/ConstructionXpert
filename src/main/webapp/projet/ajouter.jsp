@@ -21,7 +21,13 @@
         }
 
         body {
-            background-color: var(--background-color);
+            /* Adding background image */
+            background-image: url('https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/YNqJlBKl1qurbrQ2/poster-1-YNqJj2ZgvqhRgabN.jpeg');
+            background-size: cover; /* Cover the entire body */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-attachment: fixed; /* Keep the background fixed during scrolling */
+            background-position: center center; /* Center the background image */
+
             color: var(--text-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -41,6 +47,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             margin-bottom: 20px;
+            background-color: rgba(255, 255, 255, 0.9); /* Adding a semi-transparent white background to the card */
         }
 
         .card-header {
@@ -76,7 +83,7 @@
         }
 
         .page-title {
-            color: var(--primary-color);
+            color: rgba(255, 245, 43, 0.8);
             font-weight: 700;
             margin-bottom: 30px;
             border-bottom: 3px solid var(--secondary-color);
@@ -118,7 +125,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" href="?action=afficherAll">
+                    <a class="nav-link active" href="?action=getAllProjets">
                         <i class="fas fa-project-diagram me-1"></i> Projets
                     </a>
                 </li>
@@ -151,7 +158,7 @@
             <h5 class="mb-0"><i class="fas fa-plus-circle me-2"></i> Formulaire d'ajout de projet</h5>
         </div>
         <div class="card-body">
-            <form id="projetForm" action="?action=ajouterProjet" method="post">
+            <form id="projetForm" action="ajouterProjet" method="post">
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label for="nom" class="form-label">Nom du projet</label>

@@ -13,7 +13,9 @@ public class ConstrDB {
    public static Connection getConnection() throws SQLException {
       try {
          Class.forName("com.mysql.cj.jdbc.Driver");
-         return DriverManager.getConnection(URL, USER, PASSWORD);
+         Connection con = DriverManager.getConnection(URL, USER, PASSWORD);
+         System.out.println("Connected to database");
+         return con;
       } catch (ClassNotFoundException e) {
           throw new SQLException("could not load MySQL driver",e);
       }

@@ -13,7 +13,7 @@
     <!-- Custom CSS -->
     <style>
         :root {
-            --primary-color: #2c3e50;
+            --primary-color: #ff5429;
             --secondary-color: #3498db;
             --accent-color: #e74c3c;
             --background-color: #f5f5f5;
@@ -214,18 +214,11 @@
                             <td>${projet.id}</td>
                             <td>${projet.nom}</td>
                             <td>
-                                <c:choose>
-                                    <c:when test="${projet.description.length() > 50}">
-                                        ${projet.description.substring(0, 50)}...
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${projet.description}
-                                    </c:otherwise>
-                                </c:choose>
+
                             </td>
-                            <td><fmt:formatDate value="${projet.dateDeDebut}" pattern="dd/MM/yyyy" /></td>
-                            <td><fmt:formatDate value="${projet.dateDeFin}" pattern="dd/MM/yyyy" /></td>
-                            <td><fmt:formatNumber value="${projet.budget}" type="currency" currencySymbol="€" /></td>
+                            <td> value="${projet.dateDeDebut}" pattern="dd/MM/yyyy" /></td>
+                            <td> value="${projet.dateDeFin}" pattern="dd/MM/yyyy" /></td>
+                            <td> value="${projet.budget}" type="currency" currencySymbol="€" /></td>
                             <td>
                                 <a href="?action=afficherbyId&projetId=${projet.id}" class="btn btn-sm btn-info action-btn">
                                     <i class="fas fa-edit"></i>

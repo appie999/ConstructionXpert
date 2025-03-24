@@ -12,7 +12,7 @@ public class ProjetDao {
     public void CreateProjet(Projet projet) throws SQLException {
         String sql = "insert into projets(nom , description , date_de_debut , date_de_fin , budget) values(?,?,?,?,?)";
         try (Connection conn = ConstrDB.getConnection();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+             PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 
             ps.setString(1, projet.getNom());
             ps.setString(2, projet.getDescription());
@@ -23,22 +23,24 @@ public class ProjetDao {
         }
     }
 
+    public Projet getProjet(int id) throws SQLException {
+        String sql = "SELECT * FROM projets WHERE id = ?";
+        try (Connection connection = ConstrDB.getConnection();
+             PreparedStatement ps = connection.prepareStatement(sql)) {
 
-    public Projet GetProjet(int id) throws SQLException {
-        String sql = "select * from projets where id = ?";
-        Connection connection = ConstrDB.getConnection();
-        PreparedStatement ps = connection.prepareStatement(sql);
-        ps.setInt(1, id);
-        ResultSet rs = ps.executeQuery();
-        if(rs.next()) {
-            Projet projet = new Projet();
-            projet.setProjetid(rs.getInt(1));
-            projet.setNom(rs.getString(2));
-            projet.setDescription(rs.getString(3));
-            projet.setDateDeDebut(rs.getDate(4));
-            projet.setDateDeFin(rs.getDate(5));
-            projet.setBudget(rs.getDouble(6));
-            return projet;
+            ps.setInt(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Projet projet = new Projet();
+                    projet.setProjetid(rs.getInt("id"));
+                    projet.setNom(rs.getString("nom"));
+                    projet.setDescription(rs.getString("description"));
+                    projet.setDateDeDebut(rs.getDate("date_de_debut"));
+                    projet.setDateDeFin(rs.getDate("date_de_fin"));
+                    projet.setBudget(rs.getDouble("budget"));
+                    return projet;
+                }
+            }
         }
         return null;
     }
@@ -47,7 +49,8 @@ public class ProjetDao {
         String sql = "SELECT * FROM projets";
         try (Connection connection = ConstrDB.getConnection();
              Statement ps = connection.createStatement();
-             ResultSet rs = ps.executeQuery(sql)) {
+             ResultSet rs = ps.executeQuery(
+                     sql)) {
 
             while (rs.next()) {
                 Projet projet = new Projet();
@@ -77,11 +80,12 @@ public class ProjetDao {
         ps.executeUpdate();
     }
 
-    public void DeleteProjet(int id) throws SQLException {
+    public boolean DeleteProjet(int id) throws SQLException {
         String sql = "delete from projets where id = ?";
         Connection connection = ConstrDB.getConnection();
         PreparedStatement ps = connection.prepareStatement(sql);
         ps.setInt(1, id);
         ps.executeUpdate();
+        return false;
     }
 }

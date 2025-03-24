@@ -27,7 +27,6 @@
             flex-direction: column;
             min-height: 100vh;
             text-align: center;
-            overflow: hidden;
         }
 
         .navbar {
