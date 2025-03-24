@@ -87,7 +87,7 @@ public class projetServlet extends HttpServlet {
         Projet projet = new Projet(nom, description, budget, dateDeDebut, dateDeFin);
         ProjetDao projetDao = new ProjetDao();
         projetDao.CreateProjet(projet);
-        resp.sendRedirect("projet?action=list" );
+        resp.sendRedirect("projet?action=getAllProjets" );
     }
 
 

@@ -193,7 +193,7 @@
                     <a href="?action=afficherAll" class="btn btn-secondary">
                         <i class="fas fa-arrow-left me-1"></i> Retour à la liste
                     </a>
-                    <button type="submit" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary" >
                         <i class="fas fa-save me-1"></i> Enregistrer le projet
                     </button>
                 </div>
