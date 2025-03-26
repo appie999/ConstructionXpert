@@ -35,6 +35,9 @@ public class projetServlet extends HttpServlet {
             return;
         }
         switch (action) {
+            case "ajouter":
+                ajouter(req, resp);
+                break;
             case "ajouterProjet":
                 try {
                     ajouterProjet(req, resp);
@@ -125,6 +128,14 @@ public class projetServlet extends HttpServlet {
 //                break;
 //        }
     }
+
+    private void ajouter (HttpServletRequest req, HttpServletResponse resp)
+        throws ServletException, IOException
+    {
+        RequestDispatcher rd = req.getRequestDispatcher("/projet/ajouter.jsp");
+        rd.forward(req, resp);
+    }
+
     private void ajouterProjet(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         String nom = req.getParameter("nom");
         String description = req.getParameter("description");
@@ -135,7 +146,7 @@ public class projetServlet extends HttpServlet {
         ProjetDao projetDao = new ProjetDao();
         projetDao.CreateProjet(projet);
         System.out.println("project created");
-        resp.sendRedirect("projet/afficher.jsp" );
+        resp.sendRedirect(req.getContextPath() + "/projet?action=getAllProjets" );
     }
 
 
