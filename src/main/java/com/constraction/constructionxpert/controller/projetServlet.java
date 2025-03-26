@@ -39,11 +39,11 @@ public class projetServlet extends HttpServlet {
                 ajouter(req, resp);
                 break;
             case "ajouterProjet":
-                try {
-                    ajouterProjet(req, resp);
-                } catch (SQLException e) {
-                    throw new RuntimeException(e);
-                }                break;
+                ajouterProjet(req, resp);
+                break;
+            case "modifier":
+                modifier(req, resp);
+                break;
             case "modifierProjet":
                 try {
                     modifierProjet(req, resp);
@@ -136,7 +136,10 @@ public class projetServlet extends HttpServlet {
         rd.forward(req, resp);
     }
 
-    private void ajouterProjet(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
+    private void ajouterProjet(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException
+    {
+
         String nom = req.getParameter("nom");
         String description = req.getParameter("description");
         Date dateDeDebut = Date.valueOf(LocalDate.parse(req.getParameter("dateDeDebut")));
@@ -145,12 +148,27 @@ public class projetServlet extends HttpServlet {
         Projet projet = new Projet(nom, description, budget, dateDeDebut, dateDeFin);
         ProjetDao projetDao = new ProjetDao();
         projetDao.CreateProjet(projet);
+        System.out.println(projetDao);
         System.out.println("project created");
         resp.sendRedirect(req.getContextPath() + "/projet?action=getAllProjets" );
     }
 
+    private void modifier ( HttpServletRequest req, HttpServletResponse resp )
+            throws ServletException, IOException
+    {
 
-    private void modifierProjet(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+        int porjetId = Integer.parseInt(req.getParameter("id"));
+
+        Projet projet = projetDao.getProjet(porjetId);
+
+        req.setAttribute("projet", projet);
+
+        RequestDispatcher rd = req.getRequestDispatcher("/projet/modifier.jsp");
+        rd.forward(req, resp);
+
+    }
+
+    private void modifierProjet(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         String nom = req.getParameter("nom");
         String description = req.getParameter("description");
@@ -160,12 +178,14 @@ public class projetServlet extends HttpServlet {
         Projet projet = new Projet(id, nom, description, budget, dateDeDebut, dateDeFin);
         ProjetDao projetDao = new ProjetDao();
         projetDao.UpdateProjet(projet);
+        resp.sendRedirect(req.getContextPath() + "/projet?action=getAllProjets" );
     }
 
-    private void supprimerProjet(HttpServletRequest req, HttpServletResponse resp) throws SQLException {
+    private void supprimerProjet(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         int id = Integer.parseInt(req.getParameter("id"));
         ProjetDao projetDao = new ProjetDao();
         projetDao.DeleteProjet(id);
+        resp.sendRedirect(req.getContextPath() + "/projet?action=getAllProjets" );
     }
 
     private void getAllProjets(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
@@ -174,7 +194,6 @@ public class projetServlet extends HttpServlet {
         req.setAttribute("projets", projets);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/projet/afficher.jsp");
         dispatcher.forward(req, resp);
-        System.out.println(projets);
 
     }
 
