@@ -44,25 +44,28 @@ public class ProjetDao {
         }
         return null;
     }
-    public List<Projet> GetAllProjets() throws SQLException {
+    public List<Projet> GetAllProjets() {
         List<Projet> projets = new ArrayList<>();
         String sql = "SELECT * FROM projets";
-        try (Connection connection = ConstrDB.getConnection();
-             Statement ps = connection.createStatement();
-             ResultSet rs = ps.executeQuery(
-                     sql)) {
+        try (
+                Connection connection = ConstrDB.getConnection();
+                PreparedStatement ps = connection.prepareStatement(sql);
+        ) {
 
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Projet projet = new Projet();
+                projet.setProjetid(rs.getInt("projet_id"));
                 projet.setNom(rs.getString("nom"));
                 projet.setDescription(rs.getString("description"));
                 projet.setDateDeDebut(rs.getDate("date_de_debut"));
                 projet.setDateDeFin(rs.getDate("date_de_fin"));
                 projet.setBudget(rs.getDouble("budget"));
                 projets.add(projet);
+                System.out.println(projets);
             }
         } catch (SQLException e) {
-            throw new SQLException("Error fetching all projects", e);
+            e.printStackTrace();
         }
         return projets;
     }

@@ -18,6 +18,7 @@ public class ConstrDB {
          return con;
       } catch (ClassNotFoundException e) {
           throw new SQLException("could not load MySQL driver",e);
+
       }
    }
 }

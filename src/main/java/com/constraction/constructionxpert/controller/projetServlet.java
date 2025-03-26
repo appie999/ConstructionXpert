@@ -28,10 +28,7 @@ public class projetServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        RequestDispatcher rd = req.getRequestDispatcher("projet/afficher.jsp");
-    }
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        RequestDispatcher rd = req.getRequestDispatcher("projet/afficher.jsp");
         String action = req.getParameter("action");
         if (action == null) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action parameter is missing.");
@@ -78,6 +75,56 @@ public class projetServlet extends HttpServlet {
                 break;
         }
     }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        doGet(req, resp);
+//        String action = req.getParameter("action");
+//        if (action == null) {
+//            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Action parameter is missing.");
+//            return;
+//        }
+//        switch (action) {
+//            case "ajouterProjet":
+//                try {
+//                    ajouterProjet(req, resp);
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }                break;
+//            case "modifierProjet":
+//                try {
+//                    modifierProjet(req, resp);
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                break;
+//            case "supprimerProjet":
+//                try {
+//                    supprimerProjet(req, resp);
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                break;
+//            case  "getAllProjets":
+//                try {
+//                    getAllProjets(req,resp);
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                break;
+//            case "getProjet":
+//                try {
+//                    getProjet(req,resp);
+//                } catch (SQLException e) {
+//                    throw new RuntimeException(e);
+//                }
+//                break;
+//            default:
+//                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("projet/afficher.jsp");
+//                dispatcher.forward(req, resp);
+//                break;
+//        }
+    }
     private void ajouterProjet(HttpServletRequest req, HttpServletResponse resp) throws SQLException, IOException {
         String nom = req.getParameter("nom");
         String description = req.getParameter("description");
@@ -87,7 +134,8 @@ public class projetServlet extends HttpServlet {
         Projet projet = new Projet(nom, description, budget, dateDeDebut, dateDeFin);
         ProjetDao projetDao = new ProjetDao();
         projetDao.CreateProjet(projet);
-        resp.sendRedirect("projet?action=getAllProjets" );
+        System.out.println("project created");
+        resp.sendRedirect("projet/afficher.jsp" );
     }
 
 
@@ -111,10 +159,10 @@ public class projetServlet extends HttpServlet {
 
     private void getAllProjets(HttpServletRequest req, HttpServletResponse resp) throws SQLException, ServletException, IOException {
         ProjetDao projetDao = new ProjetDao();
-        List<Projet> projets = projetDao.GetAllProjets();  // Fetch all projects
-        req.setAttribute("projets", projets);  // Set the list of projects as a request attribute
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("projet/afficher.jsp");
-        dispatcher.forward(req, resp);  // Forward the request to afficher.jsp
+        List<Projet> projets = projetDao.GetAllProjets();
+        req.setAttribute("projets", projets);
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/projet/afficher.jsp");
+        dispatcher.forward(req, resp);
         System.out.println(projets);
 
     }
@@ -126,5 +174,4 @@ public class projetServlet extends HttpServlet {
         req.setAttribute("projet", projet);
         RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("projet/afficher.jsp");
     }
-
 }

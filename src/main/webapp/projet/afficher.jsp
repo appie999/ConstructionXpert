@@ -1,19 +1,25 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.text.NumberFormat" %>
+<%@ page import="java.util.Locale" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.constraction.constructionxpert.model.Projet" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%
+    SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+    NumberFormat nf = NumberFormat.getCurrencyInstance(Locale.FRANCE);
+    List<Projet> projets = (List<Projet>) request.getAttribute("projets");
+%>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ConstructionXpert - Liste des Projets</title>
-
-    <!-- Bootstrap CSS -->
+    <title>Liste des Projets - ConstructionXpert</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- Custom CSS -->
     <style>
         :root {
-            --primary-color: #ff5429;
+            --primary-color: #2c3e50;
             --secondary-color: #3498db;
             --accent-color: #e74c3c;
             --background-color: #f5f5f5;
@@ -21,7 +27,9 @@
         }
 
         body {
-            background-color: var(--background-color);
+            background-image: url('https://assets.zyrosite.com/cdn-cgi/image/format=auto,w=1920,fit=crop/YNqJlBKl1qurbrQ2/poster-1-YNqJj2ZgvqhRgabN.jpeg');
+            background-size: cover;
+            background-attachment: fixed;
             color: var(--text-color);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
@@ -40,12 +48,7 @@
             border: none;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.9);
         }
 
         .card-header {
@@ -55,224 +58,120 @@
             padding: 15px;
         }
 
+        .table thead th {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
         .btn-primary {
             background-color: var(--secondary-color);
             border-color: var(--secondary-color);
         }
 
-        .btn-primary:hover {
-            background-color: #2980b9;
-            border-color: #2980b9;
-        }
 
-        .btn-danger {
-            background-color: var(--accent-color);
-            border-color: var(--accent-color);
+         body {
+             display: flex;
+             min-height: 100vh;
+             margin: 0;
+         }
+        .sidebar {
+            width: 240px;
+            background-color: #000000;
+            color: #fff;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            bottom: 0;
+            top: 0;
         }
-
-        .btn-danger:hover {
-            background-color: #c0392b;
-            border-color: #c0392b;
+        .sidebar .navbar-brand {
+            color: #fff;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: block;
         }
-
-        .table {
-            border-collapse: separate;
-            border-spacing: 0;
-            width: 100%;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .table thead th {
-            background-color: var(--secondary-color);
-            color: white;
-            border: none;
-        }
-
-        .table tbody tr:nth-child(even) {
-            background-color: rgba(52, 152, 219, 0.1);
-        }
-
-        .table tbody tr:hover {
-            background-color: rgba(52, 152, 219, 0.2);
-        }
-
-        .page-title {
-            color: var(--primary-color);
-            font-weight: 700;
-            margin-bottom: 30px;
-            border-bottom: 3px solid var(--secondary-color);
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-
-        .action-btn {
-            width: 38px;
-            height: 38px;
-            border-radius: 50%;
-            display: inline-flex;
+        .sidebar .nav-link {
+            color: #fff;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+            display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 3px;
+        }
+        .sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #f8f9fa;
+        }
+        .sidebar .nav-link i {
+            margin-right: 10px;
+            font-size: 1.2rem;
         }
 
-        .footer {
-            background-color: var(--primary-color);
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            margin-top: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .table-responsive {
-                overflow-x: auto;
-            }
-
-            .action-btn {
-                width: 32px;
-                height: 32px;
-                font-size: 0.8em;
-            }
-        }
     </style>
 </head>
 <body>
-<!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark mb-4">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <i class="fas fa-building me-2"></i>
-            ConstructionXpert
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                    <a class="nav-link active" href="?action=afficherAll">
-                        <i class="fas fa-project-diagram me-1"></i> Projets
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-tasks me-1"></i> Tâches
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-users me-1"></i> Équipe
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="fas fa-cog me-1"></i> Paramètres
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
+<section id="sidebar_section">
+    <jsp:include page="../header.jsp" />
+</section>
 
 <div class="container">
-    <!-- Header -->
-    <div class="row mb-4">
-        <div class="col-md-8">
-            <h1 class="page-title">Gestion des Projets</h1>
-        </div>
-        <div class="col-md-4 text-end">
-            <a href="?action=afficherFormAjouter" class="btn btn-primary">
-                <i class="fas fa-plus-circle me-1"></i> Nouveau Projet
-            </a>
-        </div>
-    </div>
-
-    <!-- Project List -->
     <div class="card">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h5 class="mb-0"><i class="fas fa-list me-2"></i> Liste des Projets</h5>
-            <span class="badge bg-primary rounded-pill">${projets.size()} projet(s)</span>
+        <div class="card-header">
+            <h5 class="mb-0"><i class="fas fa-project-diagram me-2"></i> Gestion des Projets</h5>
         </div>
         <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-hover">
-                    <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nom</th>
-                        <th>Description</th>
-                        <th>Date de début</th>
-                        <th>Date de fin</th>
-                        <th>Budget</th>
-                        <th>Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="projet" items="${projets}">
-                        <tr>
-                            <td>${projet.id}</td>
-                            <td>${projet.nom}</td>
-                            <td>
-
-                            </td>
-                            <td> value="${projet.dateDeDebut}" pattern="dd/MM/yyyy" /></td>
-                            <td> value="${projet.dateDeFin}" pattern="dd/MM/yyyy" /></td>
-                            <td> value="${projet.budget}" type="currency" currencySymbol="€" /></td>
-                            <td>
-                                <a href="?action=afficherbyId&projetId=${projet.id}" class="btn btn-sm btn-info action-btn">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <button type="button" class="btn btn-sm btn-danger action-btn"
-                                        data-bs-toggle="modal" data-bs-target="#deleteModal${projet.id}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-
-                                <!-- Delete Confirmation Modal -->
-                                <div class="modal fade" id="deleteModal${projet.id}" tabindex="-1" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header bg-danger text-white">
-                                                <h5 class="modal-title">Confirmation de suppression</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                Êtes-vous sûr de vouloir supprimer le projet <strong>${projet.nom}</strong> ?
-                                                Cette action est irréversible.
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                                                <a href="?action=supprimer&projetid=${projet.id}" class="btn btn-danger">Supprimer</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                        </tr>
-                    </c:forEach>
-                    <c:if test="${empty projets}">
-                        <tr>
-                            <td colspan="7" class="text-center py-4">
-                                <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
-                                <p class="text-muted">Aucun projet trouvé. Cliquez sur "Nouveau Projet" pour en ajouter un.</p>
-                            </td>
-                        </tr>
-                    </c:if>
-                    </tbody>
-                </table>
+            <a href="?action=new" class="btn btn-primary mb-3">
+                <i class="fas fa-plus-circle me-2"></i>Nouveau Projet
+            </a>
+            <% if (projets == null || projets.isEmpty()) { %>
+            <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i> Aucun projet n'a été trouvé.
             </div>
+            <% } else { %>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Date de Début</th>
+                    <th>Date de Fin</th>
+                    <th>Budget</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (Projet projet : projets) { %>
+                <tr>
+                    <td><%= projet.getProjetid() %></td>
+                    <td><strong><%= projet.getNom() %></strong></td>
+                    <td><%= sdf.format(projet.getDateDeDebut()) %></td>
+                    <td><%= sdf.format(projet.getDateDeFin()) %></td>
+                    <td><%= nf.format(projet.getBudget()) %></td>
+                    <td>
+                        <a href="?action=afficherbyID&id=<%= projet.getProjetid() %>" class="btn btn-sm btn-info">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="#" onclick="confirmDelete(<%= projet.getProjetid() %>)" class="btn btn-sm btn-danger">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                </tr>
+                <% } %>
+                </tbody>
+            </table>
+            <% } %>
         </div>
     </div>
 </div>
 
-<!-- Footer -->
-<footer class="footer mt-auto py-3">
-    <div class="container">
-        <span>© 2025 ConstructionXpert - Tous droits réservés</span>
-    </div>
-</footer>
-
-<!-- Bootstrap JS Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function confirmDelete(id) {
+        if (confirm("Êtes-vous sûr de vouloir supprimer ce projet ?")) {
+            window.location.href = "projet?action=supprimer&id=" + id;
+        }
+    }
+</script>
 </body>
 </html>
