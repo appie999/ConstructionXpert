@@ -2,10 +2,9 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Purple Admin</title>
-    <!-- plugins:css -->
+    <title>Construction</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/vendors/mdi/css/materialdesignicons.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/vendors/ti-icons/css/themify-icons.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/vendors/css/vendor.bundle.base.css">
@@ -40,15 +39,16 @@
         </div>
     </div>
     <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-<%--        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">--%>
+        <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-start">
 <%--            <a class="navbar-brand brand-logo" href="${pageContext.request.contextPath}/projet?action=getAllProjets"><img src="${pageContext.request.contextPath}/resources/assets/images/logo.svg" alt="logo" /></a>--%>
-<%--            <a class="navbar-brand brand-logo-mini" href="${pageContext.request.contextPath}/projet?action=getAllProjets"><img src="${pageContext.request.contextPath}/resources/assets/images/logo-mini.svg" alt="logo" /></a>--%>
-<%--        </div>--%>
+            <a class="navbar-brand brand-logo-mini" href="${pageContext.request.contextPath}/projet?action=getAllProjets"><img src="${pageContext.request.contextPath}/resources/assets/images/logo-mini.svg" alt="logo" /></a>
+        </div>
         <div class="navbar-menu-wrapper d-flex align-items-stretch">
             <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
                 <span class="mdi mdi-menu"></span>
             </button>
 
+    </nav>
     <div class="container-fluid page-body-wrapper">
         <nav class="sidebar sidebar-offcanvas" id="sidebar">
             <ul class="nav">
